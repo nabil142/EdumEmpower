@@ -1,0 +1,176 @@
+.container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin: 20px;
+    flex-direction: row;
+    height: 95vh;
+}
+
+
+.registration-form {
+    flex: 1;
+    padding: 20px;
+    max-width: 400px; 
+    margin-left: 50px;
+    margin-right: -200px;
+}
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-image: linear-gradient(to right, #4D062C, #B30E67, #AD0E64); 
+    padding: 10px 20px;
+    height: 50px; 
+    font-size: 16px;
+    height: 5vh;
+  }
+
+h1 {
+    text-align: left;
+    margin-bottom: 20px;
+    font-size: 50px;
+}
+
+form {
+    text-align: left;
+    font-weight: bold;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
+}
+
+.forgot-password{
+    color: #AD0E64;
+    text-align: right;
+    margin-right: auto;
+    font-size: 15px;
+    font-weight: normal;
+    cursor: pointer;
+    transform: translateY(-10px);
+  
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    background-color: #D9D9D9;
+}
+
+button {
+    padding: 10px 20px; 
+    background-color: #772341;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 18px; 
+    font-weight: bold;
+    width: 100%;
+    transform: translateY(-10px);
+  
+}
+
+input, button {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+button:hover {
+    background-color: #AD0E64;
+}
+
+p {
+    text-align: left;
+    margin-top: 20px;
+}
+
+.p-login {
+    margin-left: 20px;
+    color: #AD0E64; 
+    text-decoration: none;
+}
+
+
+
+.info-card {
+    flex: 1;
+    padding: 45px 60px;
+    background-image: linear-gradient(to left, #772341, #AF345F, #DD4178);
+    border-radius: 10px;
+    color: white;
+    max-width: 400px;
+    max-height: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    border: 2px solid #772341;
+    margin-right: auto;
+    margin-left: auto;
+    margin-top: auto;
+    margin-bottom: 270px;
+}
+
+.card-logo {
+    width: 80px; 
+    height: auto;
+    margin-bottom: -45px;
+    transform: scale(6.3) translateY(9px); 
+    display: flex;
+    margin-left: 160px;
+}
+
+.card-text {
+    font-size: 20px;
+    line-height: 1.5;
+    color: white;
+    margin-top: 90px;
+    transform: translateY(40px);
+    text-align: center;
+}
+
+.sign-in-link, .sign-up-link {
+
+    color: black;
+    text-decoration: none;
+}
+
+.sign-in-link, .sign-up-link:hover {
+
+    color: black;
+    text-decoration: underline;
+}
+
+.info-text-below {
+    font-size: 42px; 
+    font-weight: bold;
+    color: black; 
+    margin-top: -275px;
+    line-height: 1.5;
+    margin-left: 670px;
+    max-width: 400px;
+    word-spacing: 7px;
+    font-family: M PLUS 1;
+
+}
+
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .registration-form,
+    .info-card {
+        max-width: 90%;
+    }
+
+    .info-text-below {
+        margin-left: 0;
+        max-width: 100%;
+    }
+}
