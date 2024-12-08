@@ -11,7 +11,7 @@
         @csrf
     </form>
 
-    <form method="post" action="{{ route('profile.update') }}">
+    <form method="post" action="{{ route('profile.update') }}" enctype="multipart/form-data" >
         @csrf
         @method('patch')
 
@@ -71,8 +71,8 @@
 
         <div class="form-group">
             <x-input-label for="contact_number" :value="('Contact Number')" />
+            <span style="font-size: 12px; color: gray;">max 13 number</span>
             <x-text-input id="contact_number" name="contact_number" type="text" :value="old('contact_number', $user->contact_number)" required autocomplete="Contact_Number" />
-            <x-input-error :messages="$errors->get('contact_number')" />
             @error('contact_number')
                 <span class="error-message">{{ $message }}</span>
             @enderror
@@ -106,139 +106,239 @@
             @enderror
         </div>
 
-        <div class="form-actions">
+        {{-- <div class="form-actions">
             <button type="submit" class="save-button">{{ __('Save') }}</button>
             @if (session('status') === 'profile-updated')
                 <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="saved-message">
                     {{ __('Saved.') }}
                 </p>
             @endif
+        </div> --}}
+        <h2>{{ __('Learning Profile') }}</h2>
+    
+        <div class="form-group">
+            <x-input-label for="AcademicAchievement" :value="('Academic Achievement')" />
+            <x-text-input  
+            id="AcademicAchievement" 
+            name="AcademicAchievement"
+             type="text" 
+             :value="old('AcademicAchievement', $user->AcademicAchievement)" 
+             required autocomplete="AcademicAchievement" 
+             />
+            <x-input-error :messages="$errors->get('AcademicAchievement')" />
         </div>
-    </form>
-</div>
-
-    <h2>{{ __('Learning Profile') }}</h2>
-
-    <div class="form-group">
-        <x-input-label for="AcademicAchievement" :value="('Academic Achievement')" />
-        <x-text-input  id="AcademicAchievement" name="AcademicAchievement" type="text" :value="old('AcademicAchievement', $user->AcademicAchievement)" required autocomplete="AcademicAchievement" />
-        <x-input-error :messages="$errors->get('AcademicAchievement')" />
-    </div>
+        
+        <div class="form-group">
+            <x-input-label for="SkillsMastered" :value="('Skills Mastered')" />
+            <x-text-input 
+                id="SkillsMastered" 
+                name="SkillsMastered" 
+                type="text" 
+                :value="old('SkillsMastered', $user->SkillsMastered)" 
+                required 
+                autocomplete="SkillsMastered" 
+            />
+            <x-input-error :messages="$errors->get('SkillsMastered')" />
+        </div>
+        
+        <div class="form-group">
+            <x-input-label for="CompletedCourses" :value="('Completed Courses')" />
+            <x-text-input 
+                id="CompletedCourses" 
+                name="CompletedCourses" 
+                type="text" 
+                :value="old('CompletedCourses', $user->CompletedCourses)" 
+                required 
+                autocomplete="CompletedCourses" 
+            />
+            <x-input-error :messages="$errors->get('CompletedCourses')" />
+        </div>
+        
+        <div class="form-group">
+            <x-input-label for="ObtainedCertificates" :value="('Obtained Certificates')" />
+            <div class="file-upload">
+                <!-- Input readonly untuk nama file -->
+                <x-text-input 
+                    id="certificate-file-name" 
+                    name="certificate_name" 
+                    type="text" 
+                    :value="old('certificate_name', basename($user->ObtainedCertificates))" 
+                    readonly 
+                />
+                <x-input-error :messages="$errors->get('certificate_name')" />
+                
+                <!-- Tautan untuk melihat file jika ada -->
+                @if ($user->ObtainedCertificates)
+                    <a href="{{ asset('storage/' . $user->ObtainedCertificates) }}" target="_blank" class="view-file-link">
+                        <img src="/Source/vector2.png" alt="View File Icon" class="icon">
+                    </a>
+                @endif
+        
+                <!-- Input file untuk memilih dokumen -->
+                <input 
+                    id="ObtainedCertificates" 
+                    name="ObtainedCertificates" 
+                    type="file" 
+                    accept=".pdf,.doc,.docx,.jpg,.png,.jpeg" 
+                    class="file-input" 
+                    onchange="showFileName('ObtainedCertificates', 'certificate-file-name')" 
+                />
+                <label for="ObtainedCertificates" class="file-label">
+                    <img src="/Source/choose-image.png" alt="Choose File Icon" class="icon">
+                </label>
+            </div>
+        </div>
+        
     
-    <div class="form-group">
-        <x-input-label for="SkillsMastered" :value="('Skills Mastered')" />
-        <x-text-input 
-            id="SkillsMastered" 
-            name="SkillsMastered" 
-            type="text" 
-            :value="old('SkillsMastered', $user->SkillsMastered)" 
-            required 
-            autocomplete="SkillsMastered" 
-        />
-        <x-input-error :messages="$errors->get('SkillsMastered')" />
-    </div>
+    {{-- <div class="form-actions">
+        <button type="submit" class="save-button">{{ __('Save') }}</button>
+        @if (session('status') === 'profile-updated')
+        <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="saved-message">
+            {{ __('Saved.') }}
+        </p>
+        @endif
+    </div> --}}
     
+    <h2>Digital Portfolio</h2>
     <div class="form-group">
-        <x-input-label for="CompletedCourses" :value="('Completed Courses')" />
-        <x-text-input 
-            id="CompletedCourses" 
-            name="CompletedCourses" 
-            type="text" 
-            :value="old('CompletedCourses', $user->CompletedCourses)" 
-            required 
-            autocomplete="CompletedCourses" 
-        />
-        <x-input-error :messages="$errors->get('CompletedCourses')" />
+        <x-input-label for="ProjectsorWorkCompleted" :value="('ProjectsorWorkCompleted')" />
+        <x-text-input id="ProjectsorWorkCompleted" name="ProjectsorWorkCompleted" type="text" :value="old('ProjectsorWorkCompleted', $user->ProjectsorWorkCompleted)" required autocomplete="ProjectsorWorkCompleted" />
+        @error('ProjectsorWorkCompleted')
+            <span class="error-message">{{ $message }}</span>
+        @enderror
     </div>
-    
     <div class="form-group">
-        <x-input-label for="ObtainedCertificates" :value="('Obtained Certificates')" />
+        <x-input-label for="UploadDocumentsorImages" :value="('UploadDocumentsorImages')" />
         <div class="file-upload">
             <!-- Input readonly untuk nama file -->
             <x-text-input 
-                id="certificate-file-name" 
-                name="certificate_name" 
+                id="certificate-file-name2" 
+                name="certificate_name2" 
                 type="text" 
-                :value="old('certificate_name', $user->certificate_name)" 
+                :value="old('certificate_name2', basename($user->UploadDocumentsorImages))" 
                 readonly 
             />
-            <x-input-error :messages="$errors->get('certificate_name')" />
+            <x-input-error :messages="$errors->get('certificate_name2')" />
             
+            <!-- Tautan untuk melihat file jika ada -->
+            @if ($user->ObtainedCertificates)
+                <a href="{{ asset('storage/' . $user->UploadDocumentsorImages) }}" target="_blank" class="view-file-link">
+                    <img src="/Source/vector2.png" alt="View File Icon" class="icon">
+                </a>
+            @endif
+    
             <!-- Input file untuk memilih dokumen -->
             <input 
-                id="certificate-file" 
-                name="certificate_files[]" 
+                id="UploadDocumentsorImages" 
+                name="UploadDocumentsorImages" 
                 type="file" 
-                multiple 
                 accept=".pdf,.doc,.docx,.jpg,.png,.jpeg" 
                 class="file-input" 
-                onchange="showFileName('certificate-file', 'certificate-file-name')" 
+                onchange="showFileName('UploadDocumentsorImages', 'certificate-file-name2')" 
             />
-            <label for="certificate-file" class="file-label">
+            <label for="UploadDocumentsorImages" class="file-label">
                 <img src="/Source/choose-image.png" alt="Choose File Icon" class="icon">
             </label>
         </div>
-    
-        <!-- Tampilkan daftar sertifikat yang diunggah -->
-        @if($user->ObtainedCertificates)
-            <div class="uploaded-certificates">
-                <h4>Uploaded Certificates:</h4>
-                @foreach(json_decode($user->ObtainedCertificates, true) as $certificate)
-                    <p><a href="{{ asset('storage/' . $certificate) }}" target="_blank">{{ basename($certificate) }}</a></p>
-                @endforeach
-            </div>
+    </div>
+
+    <div class="form-actions">
+        <button type="submit" class="save-button">{{ __('Save All My Change') }}</button>
+        @if (session('status') === 'profile-updated')
+        <p x-data="{ show: true }" x-show="show" x-transition x-init="setTimeout(() => show = false, 2000)" class="saved-message">
+            {{ __('Saved.') }}
+        </p>
         @endif
     </div>
+    <section class="space-y-6">
+        <header>
+            <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                {{ __('Delete Account') }}
+            </h2>
     
+            <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Before deleting your account, please download any data or information that you wish to retain.') }}
+            </p>
+        </header>
     
-    <!-- Modal -->
-    <div class="modal" id="uploadModal">
-        <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2>Media Upload</h2>
-            <div class="upload-area">
-                <input 
-                    type="file" 
-                    id="fileInput" 
-                    hidden 
-                    onchange="showFileName('fileInput', 'fileNameInput')" 
-                />
-                <label for="fileInput" class="upload-label">
-                    <img src="/Source/upload-image.png" alt="Upload Icon">
-                    <button type="button" class="browse-btn">Browse files</button>
-                </label>
-                <input 
-                    type="text" 
-                    id="fileNameInput" 
-                    class="file-name-input" 
-                    value="No file chosen" 
-                    readonly 
-                />
-            </div>
-            <div class="modal-footer">
-                <button onclick="closeModal()" class="cancel-btn">Cancel</button>
-                <button onclick="saveFile()" class="save-btn">Save</button>
-            </div>
-        </div>
-    </div>
+        <x-danger-button
+            x-data=""
+            x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
+        >{{ __('Delete Account') }}</x-danger-button>
     
-<div class="modal" id="uploadModal">
-    <div class="modal-content">
-        <span class="close-btn" onclick="closeModal()">&times;</span>
-        <h2>Media Upload</h2>
-        <div class="upload-area">
-            <input type="file" id="fileInput" hidden onchange="showFileName('fileInput', 'fileNameInput')">
-            <label for="fileInput" class="upload-label">
-                <img src="/Source/upload-image.png" alt="Upload Icon">
-                <button type="button" class="browse-btn">Browse files</button>
-            </label>
-            <input type="text" id="fileNameInput" class="file-name-input" value="No file chosen" readonly>
-        </div>
-        <div class="modal-footer">
-            <button onclick="closeModal()" class="cancel-btn">Cancel</button>
-            <button onclick="saveFile()" class="save-btn">Save</button>
-        </div>
-    </div>
+        <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
+            <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
+                @csrf
+                @method('delete') <!-- Menambahkan metode DELETE -->
+    
+                <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
+                    {{ __('Are you sure you want to delete your account?') }}
+                </h2>
+    
+                <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                    {{ __('Once your account is deleted, all of its resources and data will be permanently deleted. Please enter your password to confirm you would like to permanently delete your account.') }}
+                </p>
+    
+                <div class="mt-6">
+                    <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
+    
+                    <x-text-input
+                        id="password"
+                        name="password"
+                        type="password"
+                        class="mt-1 block w-3/4"
+                        placeholder="{{ __('Password') }}"
+                    />
+    
+                    <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+                </div>
+    
+                <div class="mt-6 flex justify-end">
+                    <x-secondary-button x-on:click="$dispatch('close')">
+                        {{ __('Cancel') }}
+                    </x-secondary-button>
+    
+                    <x-danger-button class="ms-3">
+                        {{ __('Delete Account') }}
+                    </x-danger-button>
+                </div>
+            </form>
+        </x-modal>
+    </section>
+    
+</form>
 </div>
 
-<script src="/Js/filename.js"></script>
+<script>
+    // Menampilkan nama file yang dipilih
+    function showFileName(inputId, displayId) {
+        const input = document.getElementById(inputId);
+        const display = document.getElementById(displayId);
+        if (input.files.length > 0) {
+            let fileNames = [];
+            for (let i = 0; i < input.files.length; i++) {
+                fileNames.push(input.files[i].name);
+            }
+            display.value = fileNames.join(', ');
+        }
+    }
+</script> 
+
+<script>
+    function handleFileChange(event) {
+        const fileInput = event.target;
+        const fileNameDisplay = document.getElementById('file-name');
+
+        // Perbarui nama file di UI (opsional)
+        if (fileInput.files && fileInput.files[0]) {
+            fileNameDisplay.textContent = File: ${fileInput.files[0].name};
+
+            // Menampilkan preview gambar secara instan (opsional)
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profile-img').src = e.target.result;
+            };
+            reader.readAsDataURL(fileInput.files[0]);
+        }
+}
+</script>

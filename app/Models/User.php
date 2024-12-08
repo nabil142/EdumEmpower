@@ -31,6 +31,8 @@ class User extends Authenticatable
        'SkillsMastered',
        'CompletedCourses',
        'ObtainedCertificates',
+       "ProjectsorWorkCompleted",
+       "UploadDocumentsorImages",
 
     ];
 

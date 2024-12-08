@@ -15,6 +15,8 @@ class ProfileUpdateRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'UploadDocumentsorImages' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:2048',
+            'ProjectsorWorkCompleted' => 'nullable|string|max:255',
             'ObtainedCdertificates' => 'nullable|file|mimes:pdf,doc,docx,jpg,jpeg,png|max:2048',
             'SkillsMastered' => 'nullable|string|max:255',
             'CompletedCourses' => 'nullable|string|max:255',
